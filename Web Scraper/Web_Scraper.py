@@ -1,16 +1,17 @@
-# https://dev.mysql.com/doc/connector-python/en/connector-python-examples.html
-import mysql.connector
-from mysql.connector import errorcode
+import pyodbc
 
-try:
-  cnx = mysql.connector.connect(user='scott',
-                                database='employ')
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
-else:
-  cnx.close()
+# Define the server, port, user, password, and database
+server = "large-scale-data-management-mysql.database.windows.net"
+port = 1433
+user = "dbAdmin"
+password = "Password~"
+database = "MySQL Database"
+
+# Build connection string
+connString = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server},{port};DATABASE={database};UID={user};PWD={password}"
+
+# Create connection
+conn = pyodbc.connect(connString)
+
+# Print a success message
+print("Connected!")
